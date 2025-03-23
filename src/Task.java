@@ -3,7 +3,7 @@ import java.util.Objects;
 public class Task {
     public String name;
     public String description;
-    public static  String type = "Task";
+    public String type = "Task";
     public int id;
     public String status = "NEW";
 
@@ -33,6 +33,6 @@ public class Task {
     @Override
     public String toString() {
         return
-                "Задача: '" + name + '\'' + ", Идентификатор задачи: " + id + ", Тип задачи: '" + type + ", Статус: '" + status + '\'' + ", Описание: '" + description + '\'';
+                "Задача: '" + name + '\'' + ", Идентификатор задачи: " + id + ", Тип задачи: " + type + ", Статус: " + status  + ", Описание: '" + description + '\'';
     }
 }

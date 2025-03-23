@@ -4,12 +4,16 @@ import java.util.Objects;
 public class Epic extends Task {
 
     ArrayList<Integer> listSubTasks;
-    public static  String type = "Epic";
+
 
 
     public Epic(String name, String description, int id, ArrayList<Integer> listSubTasks){
-       super(name, description, id);
+        super(name, description, id);
+        this.name = name;
+        this.description = description;
+        this.id = id;
         this.listSubTasks = listSubTasks;
+        this.type = "Epic";
 
     }
 
@@ -27,6 +31,11 @@ public class Epic extends Task {
         return Objects.hash(super.hashCode(), listSubTasks);
     }
 
-
+    @Override
+    public String toString() {
+        return
+                "Задача: '" + name + '\'' + ", Идентификатор задачи: " + id + ", Тип задачи: " + type + ", Статус: " + status
+                        + ", Описание: '" + description + '\'' + ", Список идентификаторов Subtasks: " + listSubTasks;
+    }
 
 }

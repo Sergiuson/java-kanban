@@ -1,13 +1,14 @@
-import java.util.ArrayList;
 import java.util.Objects;
 
-public class SubTask extends Epic {
-    public static  String type = "Subtask";
+public class SubTask extends Task {
+
     public Integer parentId;
 
-    SubTask(String name, String description, int id, ArrayList<Integer> listSubTasks, Integer parentId){
-        super(name, description, id,listSubTasks);
+
+    SubTask(String name, String description, int id,  Integer parentId){
+        super(name, description, id);
         this.parentId = parentId;
+        this.type = "Subtask";
     }
 
     @Override
@@ -22,5 +23,12 @@ public class SubTask extends Epic {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), parentId);
+    }
+
+    @Override
+    public String toString() {
+        return
+                "Задача: '" + name + '\'' + ", Идентификатор задачи: " + id + ", Тип задачи: " + type + ", Статус: " + status
+                        + ", Описание: '" + description + '\'' + ", Идентификатор Epic: " + parentId;
     }
 }

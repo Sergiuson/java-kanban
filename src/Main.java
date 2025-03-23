@@ -1,4 +1,4 @@
-import javax.script.ScriptEngine;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.HashMap;
@@ -8,8 +8,13 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner console = new Scanner(System.in);
+
         HashMap<Integer, Task> tasks = new HashMap<>();
-        int id = -1;
+        HashMap<Integer, Epic> epics = new HashMap<>();
+        HashMap<Integer, SubTask> subtasks = new HashMap<>();
+
+        int id = 0;
+        int newId;
 
         System.out.println("Добро пожаловать в приложение Трекер задач!");
 
@@ -20,14 +25,20 @@ public class Main {
 
             switch (command) {
                 case "1":
-                    id++;
-                    crateAllTask(id, console, tasks);
+                    newId = crateAllTask(id, console, tasks, epics, subtasks);
+                    id = newId;
                     break;
                 case "2":
-                    seeAllTasks(tasks);
+                    seeAllTasksList(tasks, epics, subtasks, console);
                     break;
                 case "3":
                     return;
+                case "4":
+                    deleteAllTasks(tasks, epics, subtasks, console);
+                    break;
+                case "5":
+                    searchByIdTask(tasks, epics, subtasks, console);
+                    break;
                 default:
                     System.out.println("Неизвестная команда!");
                     break;
@@ -39,22 +50,120 @@ public class Main {
     public static void printMenu() {
         System.out.println("Выберите команду:");
         System.out.println("1 - Создать задачу");
-        System.out.println("2 - Получение списка всех задач");
+        System.out.println("2 - Получение списка задач");
         System.out.println("3 - Выход");
+        System.out.println("4 - Удаление задач");
+        System.out.println("5 - Получение по идентификатору задачи");
     }
 
-    public static void crateAllTask (int id, Scanner console, HashMap<Integer, Task> tasks) {
+    public static Integer crateAllTask (int id, Scanner console, HashMap<Integer, Task> tasks,HashMap<Integer, Epic> epics,HashMap<Integer, SubTask> subtasks) {
         System.out.println("Укажите тип задачи (Task, Epic, Subtask):");
         String taskType = console.nextLine();
+        int newId;
         switch (taskType) {
             case "Task":
-                createTask(id, console, tasks);
+                newId = createTask(id, console, tasks);
+                //System.out.println("Task newId: " + newId);
+                id = newId;
                 break;
             case "Epic":
-                createEpic(id, console, tasks);
+                newId = createEpic(id, console, epics, subtasks);
+                //System.out.println("Epic newId: " + newId);
+                id = newId;
                 break;
             case "Subtask":
-                createSubtask(id, console, tasks);
+                System.out.println("Укажите идентификатор родительской задачи (Epic):");
+                Integer parentId = console.nextInt();
+                console.nextLine();
+                if(epics.containsKey(parentId)) {
+                    newId = createSubtask(id, console, subtasks, parentId);
+                    //Добаление id новой subtask к списку subtasks родительского Epic
+                    epics.get(parentId).listSubTasks.add(id);
+                    //System.out.println("Subtask newId: " + newId);
+                    id = newId;
+
+                } else{
+                    System.out.println("Задачи с идентификатором " + parentId + " не существует");
+                }
+                break;
+            default:
+                System.out.println("Неизвестный тип задачи!");
+                break;
+
+        }
+        return id;
+    }
+
+    public static Integer createTask(int id, Scanner console, HashMap<Integer, Task> tasks){
+        int newId;
+        System.out.println("Введите название задачи:");
+        String name = console.nextLine();
+        System.out.println("Опишите задачу:");
+        String description = console.nextLine();
+        tasks.put(id, new Task(name, description, id));
+        newId = id + 1;
+        return newId;
+    }
+
+    public static Integer createEpic(int id, Scanner console, HashMap<Integer, Epic> epics, HashMap<Integer, SubTask> subtasks){
+
+        ArrayList<Integer> subList = new ArrayList<>();
+
+        System.out.println("Введите название задачи:");
+        String name = console.nextLine();
+        System.out.println("Опишите задачу:");
+        String description = console.nextLine();
+
+        int subId = id + 1;
+        int newId;
+
+        while(true){
+            System.out.println("Хотите создать подзадачу? Yes/No ");
+            String answer = console.nextLine();
+            if(answer.equals("Yes")){
+
+                newId = createSubtask(subId, console, subtasks, id);
+                subList.add(subId);
+                subId = newId;
+            } else if (answer.equals("No")) {
+                break;
+            } else{
+                System.out.println("Неизвестный ответ!");
+            }
+        }
+        epics.put(id, new Epic(name, description, id, subList));
+        return subId;
+    }
+
+    public static Integer createSubtask(int id, Scanner console, HashMap<Integer, SubTask> subtasks, Integer parentId){
+        int newId;
+        System.out.println("Введите название задачи:");
+        String name = console.nextLine();
+        System.out.println("Опишите задачу:");
+        String description = console.nextLine();
+        subtasks.put( id , new SubTask(name, description, id, parentId));
+        newId = id + 1;
+        return newId;
+    }
+
+    public static void seeAllTasksList(HashMap<Integer, Task> tasks,HashMap<Integer, Epic> epics,HashMap<Integer, SubTask> subtasks,Scanner console){
+
+        System.out.println("Какой список задач вы хотите полчить : Tasks/Epics/Subtasks/All");
+        String answer = console.nextLine();
+        switch (answer){
+            case "Tasks":
+                seeTasksList(tasks);
+                break;
+            case "Epics":
+                seeEpicsList(epics);
+                break;
+            case "Subtasks":
+                seeSubtasksList(subtasks);
+                break;
+            case "All":
+                seeTasksList(tasks);
+                seeEpicsList(epics);
+                seeSubtasksList(subtasks);
                 break;
             default:
                 System.out.println("Неизвестный тип задачи!");
@@ -63,36 +172,84 @@ public class Main {
         }
     }
 
-    public static void seeAllTasks(HashMap<Integer, Task> tasks){
+    public static void seeTasksList(HashMap<Integer, Task> tasks){
         if(!tasks.isEmpty()) {
             for (Integer key : tasks.keySet()) {
                 Task t = tasks.get(key);
                 System.out.println("Идентификатор задачи: " + t.id + ", Название задачи: " + t.name + ", Тип задачи: " + t.type);
             }
+        } else{
+            System.out.println("Список Tasks пуст ");
+        }
+    }
+    public static void seeEpicsList(HashMap<Integer, Epic> epics){
+        if(!epics.isEmpty()) {
+            for (Integer key : epics.keySet()) {
+                Task t = epics.get(key);
+                System.out.println("Идентификатор задачи: " + t.id + ", Название задачи: " + t.name + ", Тип задачи: " + t.type);
+            }
+        } else{
+            System.out.println("Список Epics пуст ");
+        }
+    }
+    public static void seeSubtasksList(HashMap<Integer, SubTask> subtasks){
+        if(!subtasks.isEmpty()) {
+            for (Integer key : subtasks.keySet()) {
+                Task t = subtasks.get(key);
+                System.out.println("Идентификатор задачи: " + t.id + ", Название задачи: " + t.name + ", Тип задачи: " + t.type);
+            }
+        } else{
+            System.out.println("Список SubTasks пуст ");
         }
     }
 
-    public static void createTask(int id, Scanner console, HashMap<Integer, Task> tasks){
-        System.out.println("Введите название задачи:");
-        String name = console.nextLine();
-        System.out.println("Опишите задачу:");
-        String description = console.nextLine();
-        tasks.put(id, new Task(name, description, id));
+
+    public static void deleteAllTasks(HashMap<Integer, Task> tasks,HashMap<Integer, Epic> epics,HashMap<Integer, SubTask> subtasks,Scanner console){
+
+        System.out.println("Какой список задач вы хотите удалить : Tasks/Epics/Subtasks/All");
+        String answer = console.nextLine();
+        switch (answer){
+            case "Tasks":
+                tasks.clear();
+                break;
+            case "Epics":
+                epics.clear();
+                break;
+            case "Subtasks":
+                subtasks.clear();
+                break;
+            case "All":
+                tasks.clear();
+                epics.clear();
+                subtasks.clear();
+                break;
+            default:
+                System.out.println("Неизвестный тип задачи!");
+                break;
+
+        }
     }
 
-    public static void createEpic(int id, Scanner console, HashMap<Integer, Task> tasks){
-        System.out.println("Введите название задачи:");
-        String name = console.nextLine();
-        System.out.println("Опишите задачу:");
-        String description = console.nextLine();
+    public static void searchByIdTask(HashMap<Integer, Task> tasks,HashMap<Integer, Epic> epics,HashMap<Integer, SubTask> subtasks,Scanner console){
+
+        System.out.println("Введите индентификатор задачи:");
+        int id = console.nextInt();
+        console.nextLine();
+
+        if(tasks.containsKey(id)){
+            System.out.println(tasks.get(id));
+        } else if(epics.containsKey(id)){
+            System.out.println(epics.get(id));
+
+        } else if(subtasks.containsKey(id)){
+            System.out.println(subtasks.get(id));
+        } else{
+            System.out.println("Неизвестный индентификатор задачи!");
+        }
+
     }
 
-    public static void createSubtask(int id, Scanner console, HashMap<Integer, Task> tasks){
-        System.out.println("Введите название задачи:");
-        String name = console.nextLine();
-        System.out.println("Опишите задачу:");
-        String description = console.nextLine();
-    }
+
 
 
 }
