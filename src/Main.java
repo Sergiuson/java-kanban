@@ -67,7 +67,7 @@ public class Main {
                 id = newId;
                 break;
             case "Epic":
-                newId = createEpic(id, console, epics, subtasks);
+                newId = createEpic(id, console, epics);
                 //System.out.println("Epic newId: " + newId);
                 id = newId;
                 break;
@@ -100,13 +100,20 @@ public class Main {
         String name = console.nextLine();
         System.out.println("Опишите задачу:");
         String description = console.nextLine();
-        tasks.put(id, new Task(name, description, id));
-        newId = id + 1;
+        Task newTask = new Task(name, description);
+        if(!tasks.containsValue(newTask)){
+            tasks.put(id, newTask );
+            newId = id + 1;
+        } else {
+            System.out.println("Такая задача уже существует!");
+            newId = id;
+        }
+
         return newId;
     }
 
-    public static Integer createEpic(int id, Scanner console, HashMap<Integer, Epic> epics, HashMap<Integer, SubTask> subtasks){
-
+    public static Integer createEpic(int id, Scanner console, HashMap<Integer, Epic> epics){
+        int newId;
         ArrayList<Integer> subList = new ArrayList<>();
 
         System.out.println("Введите название задачи:");
@@ -114,25 +121,18 @@ public class Main {
         System.out.println("Опишите задачу:");
         String description = console.nextLine();
 
-        int subId = id + 1;
-        int newId;
 
-        while(true){
-            System.out.println("Хотите создать подзадачу? Yes/No ");
-            String answer = console.nextLine();
-            if(answer.equals("Yes")){
+        Epic newEpic = new Epic(name, description,subList);
 
-                newId = createSubtask(subId, console, subtasks, id);
-                subList.add(subId);
-                subId = newId;
-            } else if (answer.equals("No")) {
-                break;
-            } else{
-                System.out.println("Неизвестный ответ!");
-            }
+        if(!epics.containsValue(newEpic)){
+            epics.put(id, newEpic );
+            newId = id + 1;
+        } else {
+            System.out.println("Такая задача уже существует!");
+            newId = id;
         }
-        epics.put(id, new Epic(name, description, id, subList));
-        return subId;
+
+        return newId;
     }
 
     public static Integer createSubtask(int id, Scanner console, HashMap<Integer, SubTask> subtasks, Integer parentId){
@@ -141,8 +141,14 @@ public class Main {
         String name = console.nextLine();
         System.out.println("Опишите задачу:");
         String description = console.nextLine();
-        subtasks.put( id , new SubTask(name, description, id, parentId));
-        newId = id + 1;
+        SubTask newSubTask = new SubTask(name, description,  parentId);
+        if(!subtasks.containsValue(newSubTask)) {
+            subtasks.put(id, new SubTask(name, description, parentId));
+            newId = id + 1;
+        }else{
+            System.out.println("Такая задача уже существует!");
+            newId = id;
+        }
         return newId;
     }
 
@@ -176,7 +182,7 @@ public class Main {
         if(!tasks.isEmpty()) {
             for (Integer key : tasks.keySet()) {
                 Task t = tasks.get(key);
-                System.out.println("Идентификатор задачи: " + t.id + ", Название задачи: " + t.name + ", Тип задачи: " + t.type);
+                System.out.println("Идентификатор задачи: " + key+ ", Название задачи: " + t.name + ", Тип задачи: " + t.type);
             }
         } else{
             System.out.println("Список Tasks пуст ");
@@ -186,7 +192,7 @@ public class Main {
         if(!epics.isEmpty()) {
             for (Integer key : epics.keySet()) {
                 Task t = epics.get(key);
-                System.out.println("Идентификатор задачи: " + t.id + ", Название задачи: " + t.name + ", Тип задачи: " + t.type);
+                System.out.println("Идентификатор задачи: " + key + ", Название задачи: " + t.name + ", Тип задачи: " + t.type);
             }
         } else{
             System.out.println("Список Epics пуст ");
@@ -196,7 +202,7 @@ public class Main {
         if(!subtasks.isEmpty()) {
             for (Integer key : subtasks.keySet()) {
                 Task t = subtasks.get(key);
-                System.out.println("Идентификатор задачи: " + t.id + ", Название задачи: " + t.name + ", Тип задачи: " + t.type);
+                System.out.println("Идентификатор задачи: " + key + ", Название задачи: " + t.name + ", Тип задачи: " + t.type);
             }
         } else{
             System.out.println("Список SubTasks пуст ");

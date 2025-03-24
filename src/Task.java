@@ -4,13 +4,11 @@ public class Task {
     public String name;
     public String description;
     public String type = "Task";
-    public int id;
     public String status = "NEW";
 
-    public Task(String name, String description, int id){
+    public Task(String name, String description){
         this.name = name;
         this.description = description;
-        this.id = id;
 
     }
 
@@ -19,20 +17,20 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id == task.id &&
+        return
                      Objects.equals(name, task.name) &&
                      Objects.equals(description, task.description) &&
-                     Objects.equals(status, task.status);
+                     Objects.equals(type, task.type);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, id, status);
+        return Objects.hash(name, description, status);
     }
 
     @Override
     public String toString() {
         return
-                "Задача: '" + name + '\'' + ", Идентификатор задачи: " + id + ", Тип задачи: " + type + ", Статус: " + status  + ", Описание: '" + description + '\'';
+                "Задача: '" + name + '\''  + ", Тип задачи: " + type + ", Статус: " + status  + ", Описание: '" + description + '\'';
     }
 }

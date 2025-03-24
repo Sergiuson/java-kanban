@@ -5,8 +5,8 @@ public class SubTask extends Task {
     public Integer parentId;
 
 
-    SubTask(String name, String description, int id,  Integer parentId){
-        super(name, description, id);
+    SubTask(String name, String description,   Integer parentId){
+        super(name, description);
         this.parentId = parentId;
         this.type = "Subtask";
     }
@@ -28,7 +28,7 @@ public class SubTask extends Task {
     @Override
     public String toString() {
         return
-                "Задача: '" + name + '\'' + ", Идентификатор задачи: " + id + ", Тип задачи: " + type + ", Статус: " + status
+                "Задача: '" + name + '\''  + ", Тип задачи: " + type + ", Статус: " + status
                         + ", Описание: '" + description + '\'' + ", Идентификатор Epic: " + parentId;
     }
 }
