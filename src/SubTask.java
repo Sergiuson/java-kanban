@@ -11,6 +11,12 @@ public class SubTask extends Task {
         this.type = "Subtask";
     }
 
+    SubTask(String name, String description, String status,   Integer parentId){
+        super(name, description, status);
+        this.parentId = parentId;
+        this.type = "Subtask";
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

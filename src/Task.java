@@ -12,6 +12,12 @@ public class Task {
 
     }
 
+    public Task(String name, String description, String status){
+        this.name = name;
+        this.description = description;
+        this.status = status;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
