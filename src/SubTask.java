@@ -34,7 +34,7 @@ public class SubTask extends Task {
     @Override
     public String toString() {
         return
-                "Задача: '" + name + '\''  + ", Тип задачи: " + type + ", Статус: " + status
+                "Задача: " + name +  ", Тип задачи: " + type + ", Статус: " + status
                         + ", Описание: '" + description + '\'' + ", Идентификатор Epic: " + parentId;
     }
 }

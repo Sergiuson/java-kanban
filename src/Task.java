@@ -37,6 +37,6 @@ public class Task {
     @Override
     public String toString() {
         return
-                "Задача: '" + name + '\''  + ", Тип задачи: " + type + ", Статус: " + status  + ", Описание: '" + description + '\'';
+                "Задача: " + name +  ", Тип задачи: " + type + ", Статус: " + status  + ", Описание: '" + description + '\'';
     }
 }
