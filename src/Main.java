@@ -14,7 +14,9 @@ public class Main {
         HashMap<Integer, Epic> epics = new HashMap<>();
         HashMap<Integer, SubTask> subtasks = new HashMap<>();
 
+        //Обьявление начального идентификатора задач
         int id = 0;
+        //Обьявление следующего идентификатора задач
         int newId;
 
         System.out.println("Добро пожаловать в приложение Трекер задач!");
@@ -73,7 +75,7 @@ public class Main {
         System.out.println("9 - Список подзадач эпика");
 
     }
-
+    //метод создания всех задач
     public static Integer crateAllTask (int id, Scanner console, HashMap<Integer, Task> tasks,HashMap<Integer, Epic> epics,HashMap<Integer, SubTask> subtasks) {
         System.out.println("Укажите тип задачи (Task, Epic, Subtask):");
         String taskType = console.nextLine();
@@ -81,12 +83,10 @@ public class Main {
         switch (taskType) {
             case "Task":
                 newId = createTask(id, console, tasks);
-                //System.out.println("Task newId: " + newId);
                 id = newId;
                 break;
             case "Epic":
                 newId = createEpic(id, console, epics);
-                //System.out.println("Epic newId: " + newId);
                 id = newId;
                 break;
             case "Subtask":
@@ -95,7 +95,6 @@ public class Main {
                 console.nextLine();
                 if(epics.containsKey(parentId)) {
                     newId = createSubtask(id, console, subtasks, parentId, epics);
-                    //System.out.println("Subtask newId: " + newId);
                     id = newId;
 
                 } else{
@@ -109,7 +108,7 @@ public class Main {
         }
         return id;
     }
-
+    //метод создания  задач с типом Task
     public static Integer createTask(int id, Scanner console, HashMap<Integer, Task> tasks){
         int newId;
         System.out.println("Введите название задачи:");
@@ -127,7 +126,7 @@ public class Main {
 
         return newId;
     }
-
+    //метод создания  задач с типом Epic
     public static Integer createEpic(int id, Scanner console, HashMap<Integer, Epic> epics){
         int newId;
         ArrayList<Integer> subList = new ArrayList<>();
@@ -150,7 +149,7 @@ public class Main {
 
         return newId;
     }
-
+    //метод создания  задач с типом SubTask
     public static Integer createSubtask(int id, Scanner console, HashMap<Integer, SubTask> subtasks, Integer parentId, HashMap<Integer, Epic> epics){
         int newId;
         System.out.println("Введите название задачи:");
@@ -177,7 +176,7 @@ public class Main {
         }
         return newId;
     }
-
+    //метод просмотра  всех задач
     public static void seeAllTasksList(HashMap<Integer, Task> tasks,HashMap<Integer, Epic> epics,HashMap<Integer, SubTask> subtasks,Scanner console){
 
         System.out.println("Какой список задач вы хотите полчить : Tasks/Epics/Subtasks/All");
@@ -203,7 +202,7 @@ public class Main {
 
         }
     }
-
+    //метод просмотра  всех задач с типом Task
     public static void seeTasksList(HashMap<Integer, Task> tasks){
         if(!tasks.isEmpty()) {
             for (Integer key : tasks.keySet()) {
@@ -214,6 +213,7 @@ public class Main {
             System.out.println("Список Tasks пуст ");
         }
     }
+    //метод просмотра  всех задач с типом Epic
     public static void seeEpicsList(HashMap<Integer, Epic> epics){
         if(!epics.isEmpty()) {
             for (Integer key : epics.keySet()) {
@@ -224,6 +224,8 @@ public class Main {
             System.out.println("Список Epics пуст ");
         }
     }
+
+    //метод просмотра  всех задач c типом Subtask
     public static void seeSubtasksList(HashMap<Integer, SubTask> subtasks){
         if(!subtasks.isEmpty()) {
             for (Integer key : subtasks.keySet()) {
@@ -235,7 +237,7 @@ public class Main {
         }
     }
 
-
+    //метод удаления  всех задач
     public static void deleteAllTasks(HashMap<Integer, Task> tasks,HashMap<Integer, Epic> epics,HashMap<Integer, SubTask> subtasks,Scanner console){
 
         System.out.println("Какой список задач вы хотите удалить : Tasks/Epics/Subtasks/All");
@@ -270,6 +272,7 @@ public class Main {
         }
     }
 
+    //метод поиска по идентификатору задачи
     public static void searchByIdTask(HashMap<Integer, Task> tasks,HashMap<Integer, Epic> epics,HashMap<Integer, SubTask> subtasks,Scanner console){
 
         System.out.println("Введите индентификатор задачи:");
@@ -288,7 +291,7 @@ public class Main {
         }
 
     }
-
+    //метод обновления  всех задач
     public static void changeAllTasks(HashMap<Integer, Task> tasks,HashMap<Integer, Epic> epics,HashMap<Integer, SubTask> subtasks,Scanner console){
         System.out.println("Введите идентификатор задачи:");
         int id = console.nextInt();
@@ -303,7 +306,7 @@ public class Main {
             System.out.println("Неизвестный индентификатор задачи!");
         }
     }
-
+    //метод обновления  всех задач с типом Task
     public static void changeTask(HashMap<Integer, Task> tasks,Scanner console, int id){
         //Вычитывание текущих поле задачи
         String newName = tasks.get(id).name;
@@ -347,7 +350,7 @@ public class Main {
 
 
     }
-
+    //метод обновления  всех задач с типом Epic
     public static void changeEpic(HashMap<Integer, Epic> epics,Scanner console, int id){
         //Вычитывание текущих поле задачи
         String newName = epics.get(id).name;
@@ -389,7 +392,7 @@ public class Main {
             System.out.println("Такая задача уже существует!");
         }
     }
-
+    //метод обновления  всех задач с типом SubTask
     public static void changeSubtask(HashMap<Integer, SubTask> subtasks,Scanner console, int id){
         //Вычитывание текущих поле задачи
         String newName = subtasks.get(id).name;
@@ -431,7 +434,7 @@ public class Main {
             System.out.println("Такая задача уже существует!");
         }
     }
-
+    //метод обновления статуса  всех задач с типом
     public static void changeAllStatus(HashMap<Integer, Task> tasks,HashMap<Integer, Epic> epics,HashMap<Integer, SubTask> subtasks,Scanner console){
         System.out.println("Введите идентификатор задачи:");
         int id = console.nextInt();
@@ -439,14 +442,14 @@ public class Main {
         if(tasks.containsKey(id)){
             changeStatusTask(tasks, console, id);
         } else if(epics.containsKey(id)){
-            System.out.println("Статус задачи типа Epic пределяется статусами подзадач");
+            System.out.println("Статус задачи типа Epic определяется статусами подзадач");
         } else if(subtasks.containsKey(id)){
             changeStatusSubTask(epics, subtasks, console, id);
         } else{
             System.out.println("Неизвестный индентификатор задачи!");
         }
     }
-
+    //метод обновления статуса  всех задач с типом Task
     public static void changeStatusTask(HashMap<Integer, Task> tasks, Scanner console, int id){
         //Вычитывание текущих поле задачи
         String newName = tasks.get(id).name;
@@ -471,7 +474,7 @@ public class Main {
         Task task = new Task(newName,newDescription, newStatus);
         tasks.put(id, task);
     }
-
+    //метод обновления статуса  всех задач с типом SubTask
     public static void changeStatusEpic(HashMap<Integer, Epic> epics, HashMap<Integer, SubTask> subtasks, HashSet<Integer> listId){
        for(int id : listId){
          //Вычитывание текущих поле задачи
@@ -480,17 +483,25 @@ public class Main {
          ArrayList<Integer> listSubTasks = epics.get(id).listSubTasks;
          //Список статусов подзадач
          HashSet<String> statusSet = new HashSet<>();
+         //Объявление списка коррекции подзадач
+           ArrayList<Integer> removeListSubTask = new ArrayList<>();
          //Объявление нового статуса
          String newStatus;
          //Чтение статусов подзадач происхоит только в случае их существования
-         if( !listSubTasks.isEmpty()) {
-             for (int subId : listSubTasks) {
-                 if(subtasks.containsKey(subId)) {
-                     String status = subtasks.get(subId).status;
-                     statusSet.add(status);
-                 }
-             }
-         }
+          for (int subId : listSubTasks) {
+              if(subtasks.containsKey(subId)) {
+                  String status = subtasks.get(subId).status;
+                  statusSet.add(status);
+              } else {
+                  //Определяем несуществующие подзадачи, которые необходимо убрать из списка
+                  removeListSubTask.add(subId);
+              }
+          }
+          //Удаление несуществующие подзадачи
+          for (int removeSubId : removeListSubTask){
+              listSubTasks.remove(Integer.valueOf(removeSubId));
+          }
+
          if(statusSet.isEmpty()){
              newStatus = "NEW";
          } else if(statusSet.contains("NEW") || statusSet.contains("IN_PROGRESS")){
@@ -503,7 +514,7 @@ public class Main {
          epics.put(id,epic);
        }
     }
-
+    //метод обновления статуса  всех задач с типом SubTask
     public static void changeStatusSubTask(HashMap<Integer, Epic> epics, HashMap<Integer, SubTask> subtasks, Scanner console, int id){
         //Вычитывание текущих поле задачи
         String newName = subtasks.get(id).name;
@@ -534,7 +545,7 @@ public class Main {
         //Обновление статуса эпика
         changeStatusEpic(epics,subtasks,parentList);
     }
-
+    //метод удаления задачи по идентификатору
     public static void deleteIdTasks(HashMap<Integer, Task> tasks,HashMap<Integer, Epic> epics,HashMap<Integer, SubTask> subtasks,Scanner console){
         System.out.println("Введите идентификатор задачи:");
         int id = console.nextInt();
@@ -555,7 +566,7 @@ public class Main {
             System.out.println("Неизвестный индентификатор задачи!");
         }
     }
-
+    //метод просмотра подзадач опредленного эпика
     public static void seeListSubtasks(HashMap<Integer, Epic> epics,HashMap<Integer, SubTask> subtasks,Scanner console){
         System.out.println("Введите идентификатор epic:");
         int id = console.nextInt();
@@ -568,14 +579,10 @@ public class Main {
                             ", Название задачи: " + subtasks.get(sub).name +
                             ", Описание задачи: " + subtasks.get(sub).description +
                             ", Статус задачи: " + subtasks.get(sub).status);
-                } else{
-                    System.out.println("Идентификатор задачи: " + sub +
-                            ", Статус задачи: Удалена");
                 }
             }
         } else{
             System.out.println("Неизвестный индентификатор задачи!");
         }
     }
-
 }
