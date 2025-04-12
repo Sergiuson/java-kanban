@@ -11,7 +11,7 @@ public class SubTask extends Task {
         this.type = "Subtask";
     }
 
-    SubTask(String name, String description, String status,   Integer parentId){
+    SubTask(String name, String description, StatusTask status,   Integer parentId){
         super(name, description, status);
         this.parentId = parentId;
         this.type = "Subtask";

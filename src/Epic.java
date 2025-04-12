@@ -16,7 +16,7 @@ public class Epic extends Task {
 
     }
 
-    public Epic(String name, String description, String status, ArrayList<Integer> listSubTasks){
+    public Epic(String name, String description, StatusTask status, ArrayList<Integer> listSubTasks){
         super(name, description, status);
         this.name = name;
         this.description = description;

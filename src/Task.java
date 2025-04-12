@@ -4,7 +4,7 @@ public class Task {
     public String name;
     public String description;
     public String type = "Task";
-    public String status = "NEW";
+    public StatusTask status = StatusTask.NEW;
 
     public Task(String name, String description){
         this.name = name;
@@ -12,7 +12,7 @@ public class Task {
 
     }
 
-    public Task(String name, String description, String status){
+    public Task(String name, String description, StatusTask status){
         this.name = name;
         this.description = description;
         this.status = status;

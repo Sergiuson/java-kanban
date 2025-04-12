@@ -5,19 +5,24 @@ import java.util.HashSet;
 
 public class TaskManager {
 
-    Scanner console = new Scanner(System.in);
 
-    HashMap<Integer, Task> tasks = new HashMap<>();
-    HashMap<Integer, Epic> epics = new HashMap<>();
-    HashMap<Integer, SubTask> subtasks = new HashMap<>();
+    //Объявление наборов задач
+    HashMap<Integer, Task> tasks;
+    HashMap<Integer, Epic> epics;
+    HashMap<Integer, SubTask> subtasks;
+    //Объявление начального идентификатора задач
+    int id;
 
-    //Обьявление начального идентификатора задач
-    int id = 0;
-    //Обьявление следующего идентификатора задач
-    int newId;
+
+    TaskManager(HashMap<Integer, Task> tasks,HashMap<Integer, Epic> epics,HashMap<Integer, SubTask> subtasks){
+        this.tasks = tasks;
+        this.epics = epics;
+        this.subtasks = subtasks;
+        id = 0;
+    }
 
     //метод создания всех задач
-    public static Integer crateAllTask (int id, Scanner console, HashMap<Integer, Task> tasks,HashMap<Integer, Epic> epics,HashMap<Integer, SubTask> subtasks) {
+    public static Integer createAllTask (int id, Scanner console, HashMap<Integer, Task> tasks,HashMap<Integer, Epic> epics,HashMap<Integer, SubTask> subtasks) {
         System.out.println("Укажите тип задачи (Task, Epic, Subtask):");
         String taskType = console.nextLine();
         int newId;
@@ -117,32 +122,7 @@ public class TaskManager {
         }
         return newId;
     }
-    //метод просмотра  всех задач
-    public static void seeAllTasksList(HashMap<Integer, Task> tasks,HashMap<Integer, Epic> epics,HashMap<Integer, SubTask> subtasks,Scanner console){
 
-        System.out.println("Какой список задач вы хотите полчить : Tasks/Epics/Subtasks/All");
-        String answer = console.nextLine();
-        switch (answer){
-            case "Tasks":
-                seeTasksList(tasks);
-                break;
-            case "Epics":
-                seeEpicsList(epics);
-                break;
-            case "Subtasks":
-                seeSubtasksList(subtasks);
-                break;
-            case "All":
-                seeTasksList(tasks);
-                seeEpicsList(epics);
-                seeSubtasksList(subtasks);
-                break;
-            default:
-                System.out.println("Неизвестный тип задачи!");
-                break;
-
-        }
-    }
     //метод просмотра  всех задач с типом Task
     public static void seeTasksList(HashMap<Integer, Task> tasks){
         if(!tasks.isEmpty()) {
@@ -395,18 +375,18 @@ public class TaskManager {
         //Вычитывание текущих поле задачи
         String newName = tasks.get(id).name;
         String newDescription = tasks.get(id).description;
-        String newStatus = tasks.get(id).status;
+        StatusTask newStatus = tasks.get(id).status;
         System.out.println("Какой статус установит : 1 - NEW; 2 - IN_PROGRESS; 3 - DONE");
         int answer = console.nextInt();
         switch (answer) {
             case 1:
-                newStatus = "NEW";
+                newStatus = StatusTask.NEW;
                 break;
             case 2:
-                newStatus = "IN_PROGRESS";
+                newStatus = StatusTask.IN_PROGRESS;
                 break;
             case 3:
-                newStatus = "DONE";
+                newStatus = StatusTask.DONE;
             default:
                 System.out.println("Неизвестный ответ");
                 break;
@@ -423,15 +403,15 @@ public class TaskManager {
             String newDescription = epics.get(id).description;
             ArrayList<Integer> listSubTasks = epics.get(id).listSubTasks;
             //Список статусов подзадач
-            HashSet<String> statusSet = new HashSet<>();
+            HashSet<StatusTask> statusSet = new HashSet<>();
             //Объявление списка коррекции подзадач
             ArrayList<Integer> removeListSubTask = new ArrayList<>();
             //Объявление нового статуса
-            String newStatus;
+            StatusTask newStatus;
             //Чтение статусов подзадач происхоит только в случае их существования
             for (int subId : listSubTasks) {
                 if(subtasks.containsKey(subId)) {
-                    String status = subtasks.get(subId).status;
+                    StatusTask status = subtasks.get(subId).status;
                     statusSet.add(status);
                 } else {
                     //Определяем несуществующие подзадачи, которые необходимо убрать из списка
@@ -444,11 +424,11 @@ public class TaskManager {
             }
 
             if(statusSet.isEmpty()){
-                newStatus = "NEW";
-            } else if(statusSet.contains("NEW") || statusSet.contains("IN_PROGRESS")){
-                newStatus = "IN_PROGRESS";
+                newStatus = StatusTask.NEW;
+            } else if(statusSet.contains(StatusTask.NEW) || statusSet.contains(StatusTask.IN_PROGRESS)){
+                newStatus = StatusTask.IN_PROGRESS;
             } else{
-                newStatus = "DONE";
+                newStatus = StatusTask.DONE;
             }
             //Запись обновленной задачи
             Epic epic = new Epic(newName,newDescription,newStatus,listSubTasks);
@@ -460,7 +440,7 @@ public class TaskManager {
         //Вычитывание текущих поле задачи
         String newName = subtasks.get(id).name;
         String newDescription = subtasks.get(id).description;
-        String newStatus = subtasks.get(id).status;
+        StatusTask newStatus = subtasks.get(id).status;
         HashSet<Integer> parentList = new HashSet<>();
         //Формирование списка родительского эпика, для обновления его статуса
         parentList.add(subtasks.get(id).parentId);
@@ -469,13 +449,14 @@ public class TaskManager {
         int answer = console.nextInt();
         switch (answer) {
             case 1:
-                newStatus = "NEW";
+                newStatus = StatusTask.NEW;
                 break;
             case 2:
-                newStatus = "IN_PROGRESS";
+                newStatus = StatusTask.IN_PROGRESS;
                 break;
             case 3:
-                newStatus = "DONE";
+                newStatus = StatusTask.DONE;
+                break;
             default:
                 System.out.println("Неизвестный ответ");
                 break;
