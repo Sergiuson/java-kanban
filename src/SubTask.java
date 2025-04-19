@@ -23,7 +23,8 @@ public class SubTask extends Task {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         SubTask subTask = (SubTask) o;
-        return Objects.equals(parentId, subTask.parentId);
+        return
+                Objects.equals(parentId, subTask.parentId);
     }
 
     @Override
