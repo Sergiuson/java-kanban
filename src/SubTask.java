@@ -2,19 +2,19 @@ import java.util.Objects;
 
 public class SubTask extends Task {
 
-    public Integer parentId;
+    public Integer epicId;
 
 
-    SubTask(String name, String description,   Integer parentId){
+    SubTask(String name, String description,   Integer epicId){
         super(name, description);
-        this.parentId = parentId;
-        this.type = "Subtask";
+        this.epicId = epicId;
+        this.type = TypeTask.SUBTASK;
     }
 
-    SubTask(String name, String description, StatusTask status,   Integer parentId){
+    SubTask(String name, String description, StatusTask status,   Integer epicId){
         super(name, description, status);
-        this.parentId = parentId;
-        this.type = "Subtask";
+        this.epicId = epicId;
+        this.type = TypeTask.SUBTASK;
     }
 
     @Override
@@ -24,18 +24,17 @@ public class SubTask extends Task {
         if (!super.equals(o)) return false;
         SubTask subTask = (SubTask) o;
         return
-                Objects.equals(parentId, subTask.parentId);
+                Objects.equals(epicId, subTask.epicId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), parentId);
+        return Objects.hash(super.hashCode(), epicId);
     }
 
     @Override
     public String toString() {
         return
-                "Задача: " + name +  ", Тип задачи: " + type + ", Статус: " + status
-                        + ", Описание: '" + description + '\'' + ", Идентификатор Epic: " + parentId;
+                "SubTask{name = " + name +  ", type = " + type + ", status = " + status  + ", description = '" + description +  ", epicId = " + epicId + '}';
     }
 }

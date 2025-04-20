@@ -3,7 +3,7 @@ import java.util.Objects;
 public class Task {
     public String name;
     public String description;
-    public String type = "Task";
+    public TypeTask type = TypeTask.TASK;
     public StatusTask status = StatusTask.NEW;
 
     public Task(String name, String description){
@@ -37,6 +37,6 @@ public class Task {
     @Override
     public String toString() {
         return
-                "Задача: " + name +  ", Тип задачи: " + type + ", Статус: " + status  + ", Описание: '" + description + '\'';
+                "Task{name = " + name +  ", type = " + type + ", status = " + status  + ", description = '" + description + '}';
     }
 }

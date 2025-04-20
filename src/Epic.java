@@ -12,7 +12,7 @@ public class Epic extends Task {
         this.name = name;
         this.description = description;
         this.listSubTasks = listSubTasks;
-        this.type = "Epic";
+        this.type = TypeTask.EPIC;
 
     }
 
@@ -21,7 +21,7 @@ public class Epic extends Task {
         this.name = name;
         this.description = description;
         this.listSubTasks = listSubTasks;
-        this.type = "Epic";
+        this.type = TypeTask.EPIC;
 
     }
 
@@ -35,8 +35,7 @@ public class Epic extends Task {
     @Override
     public String toString() {
         return
-                "Задача: " + name  + ", Тип задачи: " + type + ", Статус: " + status
-                        + ", Описание: '" + description + '\'' + ", Список идентификаторов Subtasks: " + listSubTasks;
+                "Epic{name = " + name +  ", type = " + type + ", status = " + status  + ", description = '" + description +  ", listSubTasks = " + listSubTasks + '}';
     }
 
 }
