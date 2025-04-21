@@ -37,6 +37,6 @@ public class Task {
     @Override
     public String toString() {
         return
-                "Task{name = " + name +  ", type = " + type + ", status = " + status  + ", description = '" + description + '}';
+                "Task{name = " + name +  ", type = " + type + ", status = " + status  + ", description = '" + description +"'" + '}';
     }
 }

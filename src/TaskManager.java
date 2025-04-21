@@ -20,81 +20,65 @@ public class TaskManager {
 
 
     //метод создания  задач с типом Task
-    public  Integer createTask(int id, String name,String description, HashMap<Integer, Task> tasks){
-        int newId;
-        Task newTask = new Task(name, description);
+    public  void createTask(Task newTask){
         if(!tasks.containsValue(newTask)){
             tasks.put(id, newTask );
-            newId = id + 1;
-        } else {
-            newId = id;
+            id++;
         }
-
-        return newId;
     }
     //метод создания  задач с типом Epic
-    public  Integer createEpic(int id, String name,String description , HashMap<Integer, Epic> epics){
-        int newId;
-        ArrayList<Integer> subList = new ArrayList<>();
-        Epic newEpic = new Epic(name, description,subList);
+    public  void createEpic( Epic newEpic){
 
         if(!epics.containsValue(newEpic)){
             epics.put(id, newEpic );
-            newId = id + 1;
-        } else {
-            newId = id;
+            id++;
         }
-
-        return newId;
     }
     //метод создания  задач с типом SubTask
-    public  Integer createSubtask(int id, String name,String description , HashMap<Integer, SubTask> subtasks, Integer epicId, HashMap<Integer, Epic> epics){
-        int newId;
-        SubTask newSubTask = new SubTask(name, description,  epicId);
+    public  void createSubtask(SubTask newSubTask){
+
+
         // Subtask создается только в том случае, если сущестует Epic c таким epicId и у него нет ещё такой подзадачи
-        if(!subtasks.containsValue(newSubTask) && epics.containsKey(epicId)) {
-            subtasks.put(id, new SubTask(name, description, epicId));
-            newId = id + 1;
+        if(!subtasks.containsValue(newSubTask) && epics.containsKey(newSubTask.epicId)) {
+            subtasks.put(id, newSubTask);
             //Обновление родительского эпика
-            String EpicName = epics.get(epicId).name;
-            String EpicDesrip = epics.get(epicId).description;
-            ArrayList<Integer> EpicSubTasks = epics.get(epicId).listSubTasks;
+            String EpicName = epics.get(newSubTask.epicId).name;
+            String EpicDesrip = epics.get(newSubTask.epicId).description;
+            ArrayList<Integer> EpicSubTasks = epics.get(newSubTask.epicId).listSubTasks;
             EpicSubTasks.add(id);
-            epics.put(epicId, new Epic(EpicName,EpicDesrip,EpicSubTasks));
+            epics.put(newSubTask.epicId, new Epic(EpicName,EpicDesrip,EpicSubTasks));
             //Вызов метода epic, изменяющего статус задачи согласно новой подзадачи
             HashSet<Integer> epicTask = new HashSet<>();
-            epicTask.add(epicId);
-            changeStatusEpic(epics,subtasks,epicTask);
-        }else{
-            newId = id;
+            epicTask.add(newSubTask.epicId);
+            changeStatusEpic(epicTask);
+            id++;
         }
-        return newId;
     }
 
     //метод просмотра  всех задач с типом Task
-    public  Collection<Task> getTasks(HashMap<Integer, Task> tasks){
+    public  Collection<Task> getTasks(){
        return tasks.values();
     }
     //метод просмотра  всех задач с типом Epic
-    public  Collection<Epic> getEpics(HashMap<Integer, Epic> epics){
+    public  Collection<Epic> getEpics(){
         return epics.values();
     }
 
     //метод просмотра  всех задач c типом Subtask
-    public  Collection<SubTask> getSubtasks(HashMap<Integer, SubTask> subtasks){
+    public  Collection<SubTask> getSubtasks(){
         return subtasks.values();
     }
 
     //метод удаления всех Task
-    public  void deleteTasks(HashMap<Integer, Task> tasks){
+    public  void deleteTasks(){
         tasks.clear();
     }
     //метод удаления всех Epic
-    public  void deleteEpics(HashMap<Integer, Epic> epics){
+    public  void deleteEpics(){
         epics.clear();
     }
     //метод удаления всех SubTask
-    public  void deleteSubtasks(HashMap<Integer, Epic> epics,HashMap<Integer, SubTask> subtasks){
+    public  void deleteSubtasks(){
         //Определяем список существующих эпиков
         HashSet<Integer> EpicIdList = new HashSet<>();
         for( SubTask subtask: subtasks.values()) {
@@ -103,32 +87,32 @@ public class TaskManager {
         //Удаляем все подзадачи
         subtasks.clear();
         //Обновляем статусы всем эпикам
-        changeStatusEpic(epics,subtasks,EpicIdList);
+        changeStatusEpic(EpicIdList);
     }
     //метод просмотра   задачи с типом Task по id
-    public  Task getTasksById(HashMap<Integer, Task> tasks, Integer id){
+    public  Task getTasksById( Integer id){
         return tasks.get(id);
     }
     //метод просмотра   задачи с типом Epic по id
-    public  Epic getEpicsById(HashMap<Integer, Epic> epics, Integer id){
+    public  Epic getEpicsById( Integer id){
         return epics.get(id);
     }
     //метод просмотра   задачи с типом SubTask по id
-    public  SubTask getSubtasksById(HashMap<Integer, SubTask> subtasks, Integer id){
+    public  SubTask getSubtasksById( Integer id){
         return subtasks.get(id);
     }
 
     //метод обновления  всех задач с типом Task
-    public  void changeTask(HashMap<Integer, Task> tasks,String name, String description, int id){
+    public  void changeTask(Task newTask, int id){
         //Вычитывание текущих поле задачи
         String newName = tasks.get(id).name;
         String newDescription = tasks.get(id).description;
         //Определение полей для изменения
-        if(!name.isEmpty()){
-            newName = name;
+        if(!newTask.name.isEmpty()){
+            newName = newTask.name;
         }
-        if(!description.isEmpty()){
-            newDescription = description;
+        if(!newTask.description.isEmpty()){
+            newDescription = newTask.description;
         }
         Task task = new Task(newName,newDescription);
         //Перед изменением задачи проверяется наличие аналогичной задачи
@@ -137,17 +121,17 @@ public class TaskManager {
         }
     }
     //метод обновления  всех задач с типом Epic
-    public  void changeEpic(HashMap<Integer, Epic> epics,String name, String description, int id){
+    public  void changeEpic(Epic newEpic, int id){
         //Вычитывание текущих поле задачи
         String newName = epics.get(id).name;
         String newDescription = epics.get(id).description;
         ArrayList<Integer> newListSubTasks = epics.get(id).listSubTasks;
         //Определение полей для изменения
-        if(!name.isEmpty()){
-            newName = name;
+        if(!newEpic.name.isEmpty()){
+            newName = newEpic.name;
         }
-        if(!description.isEmpty()){
-            newDescription = description;
+        if(!newEpic.description.isEmpty()){
+            newDescription = newEpic.description;
         }
         Epic epic = new Epic(newName,newDescription,newListSubTasks);
         //Перед изменением задачи проверяется наличие аналогичной задачи
@@ -156,17 +140,17 @@ public class TaskManager {
         }
     }
     //метод обновления  всех задач с типом SubTask
-    public  void changeSubtask(HashMap<Integer, SubTask> subtasks,String name, String description, int id){
+    public  void changeSubtask(SubTask newSubTask, int id){
         //Вычитывание текущих поле задачи
         String newName = subtasks.get(id).name;
         String newDescription = subtasks.get(id).description;
         int newEpicId = subtasks.get(id).epicId;
         //Определение полей для изменения
-        if(!name.isEmpty()){
-            newName = name;
+        if(!newSubTask.name.isEmpty()){
+            newName = newSubTask.name;
         }
-        if(!description.isEmpty()){
-            newDescription = description;
+        if(!newSubTask.description.isEmpty()){
+            newDescription = newSubTask.description;
         }
         SubTask subtask = new SubTask(newName,newDescription,newEpicId);
         //Перед изменением задачи проверяется наличие аналогичной задачи
@@ -175,7 +159,7 @@ public class TaskManager {
         }
     }
     //метод обновления статуса  всех задач с типом Task
-    public  void changeStatusTask(HashMap<Integer, Task> tasks, int statusCode, int id){
+    public  void changeStatusTask( int statusCode, int id){
         //Вычитывание текущих поле задачи
         String newName = tasks.get(id).name;
         String newDescription = tasks.get(id).description;
@@ -198,7 +182,7 @@ public class TaskManager {
         tasks.put(id, task);
     }
     //метод обновления статуса  всех задач с типом Epic
-    public  void changeStatusEpic(HashMap<Integer, Epic> epics, HashMap<Integer, SubTask> subtasks, HashSet<Integer> listId){
+    public  void changeStatusEpic( HashSet<Integer> listId){
         for(int id : listId){
             //Вычитывание текущих поле задачи
             String newName = epics.get(id).name;
@@ -210,7 +194,7 @@ public class TaskManager {
             ArrayList<Integer> removeListSubTask = new ArrayList<>();
             //Объявление нового статуса
             StatusTask newStatus;
-            //Чтение статусов подзадач происхоит только в случае их существования
+            //Чтение статусов подзадач происходит только в случае их существования
             for (int subId : listSubTasks) {
                 if(subtasks.containsKey(subId)) {
                     StatusTask status = subtasks.get(subId).status;
@@ -238,7 +222,7 @@ public class TaskManager {
         }
     }
     //метод обновления статуса  всех задач с типом SubTask
-    public  void changeStatusSubTask(HashMap<Integer, Epic> epics, HashMap<Integer, SubTask> subtasks, int statusCode, int id){
+    public  void changeStatusSubTask( int statusCode, int id){
         //Вычитывание текущих поле задачи
         String newName = subtasks.get(id).name;
         String newDescription = subtasks.get(id).description;
@@ -263,30 +247,30 @@ public class TaskManager {
         SubTask subtask = new SubTask(newName,newDescription, newStatus, subtasks.get(id).epicId);
         subtasks.put(id, subtask);
         //Обновление статуса эпика
-        changeStatusEpic(epics,subtasks,EpicList);
+        changeStatusEpic(EpicList);
     }
 
     //метод удаления Task по ID
-    public  void deleteTasksById(HashMap<Integer, Task> tasks, int id){
+    public  void deleteTasksById( int id){
         tasks.remove(id);
     }
     //метод удаления Epic по ID
-    public  void deleteEpicsById(HashMap<Integer, Epic> epics, int id){
+    public  void deleteEpicsById( int id){
         epics.remove(id);
     }
     //метод удаления Subtask по ID
-    public  void deleteSubtasksById(HashMap<Integer, SubTask> subtasks,HashMap<Integer, Epic> epics, int id){
+    public  void deleteSubtasksById( int id){
         //Определение родительского эпика
         HashSet<Integer> EpicList = new HashSet<>();
         EpicList.add(subtasks.get(id).epicId);
         //Удаление задачи
         subtasks.remove(id);
         //Обновление статуса эпика
-        changeStatusEpic(epics,subtasks,EpicList);
+        changeStatusEpic(EpicList);
     }
 
     //метод просмотра подзадач опредленного эпика
-    public  ArrayList<SubTask> getListSubtasks(HashMap<Integer, Epic> epics,HashMap<Integer, SubTask> subtasks, int id){
+    public  ArrayList<SubTask> getListSubtasks( int id){
         ArrayList<SubTask> listSubtask = new ArrayList<>();
         if(epics.containsKey(id)){
             for(int sub : epics.get(id).listSubTasks){
