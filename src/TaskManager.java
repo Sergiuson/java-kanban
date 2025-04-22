@@ -104,150 +104,161 @@ public class TaskManager {
 
     //метод обновления  всех задач с типом Task
     public  void changeTask(Task newTask, int id){
-        //Вычитывание текущих поле задачи
-        String newName = tasks.get(id).name;
-        String newDescription = tasks.get(id).description;
-        //Определение полей для изменения
-        if(!newTask.name.isEmpty()){
-            newName = newTask.name;
-        }
-        if(!newTask.description.isEmpty()){
-            newDescription = newTask.description;
-        }
-        Task task = new Task(newName,newDescription);
-        //Перед изменением задачи проверяется наличие аналогичной задачи
-        if(!tasks.containsValue(task)){
-            tasks.put(id, task );
+        if (tasks.containsKey(id)) {
+            //Вычитывание текущих поле задачи
+            String newName = tasks.get(id).name;
+            String newDescription = tasks.get(id).description;
+            //Определение полей для изменения
+            if (!newTask.name.isEmpty()) {
+                newName = newTask.name;
+            }
+            if (!newTask.description.isEmpty()) {
+                newDescription = newTask.description;
+            }
+            Task task = new Task(newName, newDescription);
+            //Перед изменением задачи проверяется наличие аналогичной задачи
+            if (!tasks.containsValue(task)) {
+                tasks.put(id, task);
+            }
         }
     }
     //метод обновления  всех задач с типом Epic
     public  void changeEpic(Epic newEpic, int id){
-        //Вычитывание текущих поле задачи
-        String newName = epics.get(id).name;
-        String newDescription = epics.get(id).description;
-        ArrayList<Integer> newListSubTasks = epics.get(id).listSubTasks;
-        //Определение полей для изменения
-        if(!newEpic.name.isEmpty()){
-            newName = newEpic.name;
-        }
-        if(!newEpic.description.isEmpty()){
-            newDescription = newEpic.description;
-        }
-        Epic epic = new Epic(newName,newDescription,newListSubTasks);
-        //Перед изменением задачи проверяется наличие аналогичной задачи
-        if(!epics.containsValue(epic)){
-            epics.put(id, epic );
+        if (epics.containsKey(id)) {
+            //Вычитывание текущих поле задачи
+            String newName = epics.get(id).name;
+            String newDescription = epics.get(id).description;
+            ArrayList<Integer> newListSubTasks = epics.get(id).listSubTasks;
+            //Определение полей для изменения
+            if (!newEpic.name.isEmpty()) {
+                newName = newEpic.name;
+            }
+            if (!newEpic.description.isEmpty()) {
+                newDescription = newEpic.description;
+            }
+            Epic epic = new Epic(newName, newDescription, newListSubTasks);
+            //Перед изменением задачи проверяется наличие аналогичной задачи
+            if (!epics.containsValue(epic)) {
+                epics.put(id, epic);
+            }
         }
     }
     //метод обновления  всех задач с типом SubTask
     public  void changeSubtask(SubTask newSubTask, int id){
-        //Вычитывание текущих поле задачи
-        String newName = subtasks.get(id).name;
-        String newDescription = subtasks.get(id).description;
-        int newEpicId = subtasks.get(id).epicId;
-        //Определение полей для изменения
-        if(!newSubTask.name.isEmpty()){
-            newName = newSubTask.name;
-        }
-        if(!newSubTask.description.isEmpty()){
-            newDescription = newSubTask.description;
-        }
-        SubTask subtask = new SubTask(newName,newDescription,newEpicId);
-        //Перед изменением задачи проверяется наличие аналогичной задачи
-        if(!subtasks.containsValue(subtask)){
-            subtasks.put(id, subtask );
+        if (subtasks.containsKey(id)) {
+            //Вычитывание текущих поле задачи
+            String newName = subtasks.get(id).name;
+            String newDescription = subtasks.get(id).description;
+            int newEpicId = subtasks.get(id).epicId;
+            //Определение полей для изменения
+            if (!newSubTask.name.isEmpty()) {
+                newName = newSubTask.name;
+            }
+            if (!newSubTask.description.isEmpty()) {
+                newDescription = newSubTask.description;
+            }
+            SubTask subtask = new SubTask(newName, newDescription, newEpicId);
+            //Перед изменением задачи проверяется наличие аналогичной задачи
+            if (!subtasks.containsValue(subtask)) {
+                subtasks.put(id, subtask);
+            }
         }
     }
     //метод обновления статуса  всех задач с типом Task
     public  void changeStatusTask( int statusCode, int id){
-        //Вычитывание текущих поле задачи
-        String newName = tasks.get(id).name;
-        String newDescription = tasks.get(id).description;
-        StatusTask newStatus = tasks.get(id).status;
-        switch (statusCode) {
-            case 1:
-                newStatus = StatusTask.NEW;
-                break;
-            case 2:
-                newStatus = StatusTask.IN_PROGRESS;
-                break;
-            case 3:
-                newStatus = StatusTask.DONE;
-                break;
-            default:
-                break;
-        }
+        if (tasks.containsKey(id)) {
+            //Вычитывание текущих поле задачи
+            String newName = tasks.get(id).name;
+            String newDescription = tasks.get(id).description;
+            StatusTask newStatus = tasks.get(id).status;
+            switch (statusCode) {
+                case 1:
+                    newStatus = StatusTask.NEW;
+                    break;
+                case 2:
+                    newStatus = StatusTask.IN_PROGRESS;
+                    break;
+                case 3:
+                    newStatus = StatusTask.DONE;
+                    break;
+                default:
+                    break;
+            }
 
-        Task task = new Task(newName,newDescription, newStatus);
-        tasks.put(id, task);
+            Task task = new Task(newName, newDescription, newStatus);
+            tasks.put(id, task);
+        }
     }
     //метод обновления статуса  всех задач с типом Epic
     public  void changeStatusEpic( HashSet<Integer> listId){
-        for(int id : listId){
-            //Вычитывание текущих поле задачи
-            String newName = epics.get(id).name;
-            String newDescription = epics.get(id).description;
-            ArrayList<Integer> listSubTasks = epics.get(id).listSubTasks;
-            //Список статусов подзадач
-            HashSet<StatusTask> statusSet = new HashSet<>();
-            //Объявление списка коррекции подзадач
-            ArrayList<Integer> removeListSubTask = new ArrayList<>();
-            //Объявление нового статуса
-            StatusTask newStatus;
-            //Чтение статусов подзадач происходит только в случае их существования
-            for (int subId : listSubTasks) {
-                if(subtasks.containsKey(subId)) {
-                    StatusTask status = subtasks.get(subId).status;
-                    statusSet.add(status);
-                } else {
-                    //Определяем несуществующие подзадачи, которые необходимо убрать из списка
-                    removeListSubTask.add(subId);
+        for(int id : listId) {
+            if (epics.containsKey(id)) {
+                //Вычитывание текущих поле задачи
+                String newName = epics.get(id).name;
+                String newDescription = epics.get(id).description;
+                ArrayList<Integer> listSubTasks = epics.get(id).listSubTasks;
+                //Список статусов подзадач
+                HashSet<StatusTask> statusSet = new HashSet<>();
+                //Объявление списка коррекции подзадач
+                ArrayList<Integer> removeListSubTask = new ArrayList<>();
+                //Объявление нового статуса
+                StatusTask newStatus;
+                //Чтение статусов подзадач происходит только в случае их существования
+                for (int subId : listSubTasks) {
+                    if (subtasks.containsKey(subId)) {
+                        StatusTask status = subtasks.get(subId).status;
+                        statusSet.add(status);
+                    } else {
+                        //Определяем несуществующие подзадачи, которые необходимо убрать из списка
+                        removeListSubTask.add(subId);
+                    }
                 }
+                //Удаление несуществующие подзадачи
+                for (int removeSubId : removeListSubTask) {
+                    listSubTasks.remove(Integer.valueOf(removeSubId));
+                }
+                if (statusSet.isEmpty()) {
+                    newStatus = StatusTask.NEW;
+                } else if (statusSet.contains(StatusTask.NEW) || statusSet.contains(StatusTask.IN_PROGRESS)) {
+                    newStatus = StatusTask.IN_PROGRESS;
+                } else {
+                    newStatus = StatusTask.DONE;
+                }
+                //Запись обновленной задачи
+                Epic epic = new Epic(newName, newDescription, newStatus, listSubTasks);
+                epics.put(id, epic);
             }
-            //Удаление несуществующие подзадачи
-            for (int removeSubId : removeListSubTask){
-                listSubTasks.remove(Integer.valueOf(removeSubId));
-            }
-
-            if(statusSet.isEmpty()){
-                newStatus = StatusTask.NEW;
-            } else if(statusSet.contains(StatusTask.NEW) || statusSet.contains(StatusTask.IN_PROGRESS)){
-                newStatus = StatusTask.IN_PROGRESS;
-            } else{
-                newStatus = StatusTask.DONE;
-            }
-            //Запись обновленной задачи
-            Epic epic = new Epic(newName,newDescription,newStatus,listSubTasks);
-            epics.put(id,epic);
         }
     }
     //метод обновления статуса  всех задач с типом SubTask
     public  void changeStatusSubTask( int statusCode, int id){
-        //Вычитывание текущих поле задачи
-        String newName = subtasks.get(id).name;
-        String newDescription = subtasks.get(id).description;
-        StatusTask newStatus = subtasks.get(id).status;
-        HashSet<Integer> EpicList = new HashSet<>();
-        //Формирование списка родительского эпика, для обновления его статуса
-        EpicList.add(subtasks.get(id).epicId);
+        if (subtasks.containsKey(id)) {
+            //Вычитывание текущих поле задачи
+            String newName = subtasks.get(id).name;
+            String newDescription = subtasks.get(id).description;
+            StatusTask newStatus = subtasks.get(id).status;
+            HashSet<Integer> EpicList = new HashSet<>();
+            //Формирование списка родительского эпика, для обновления его статуса
+            EpicList.add(subtasks.get(id).epicId);
 
-        switch (statusCode) {
-            case 1:
-                newStatus = StatusTask.NEW;
-                break;
-            case 2:
-                newStatus = StatusTask.IN_PROGRESS;
-                break;
-            case 3:
-                newStatus = StatusTask.DONE;
-                break;
-            default:
-                break;
+            switch (statusCode) {
+                case 1:
+                    newStatus = StatusTask.NEW;
+                    break;
+                case 2:
+                    newStatus = StatusTask.IN_PROGRESS;
+                    break;
+                case 3:
+                    newStatus = StatusTask.DONE;
+                    break;
+                default:
+                    break;
+            }
+            SubTask subtask = new SubTask(newName, newDescription, newStatus, subtasks.get(id).epicId);
+            subtasks.put(id, subtask);
+            //Обновление статуса эпика
+            changeStatusEpic(EpicList);
         }
-        SubTask subtask = new SubTask(newName,newDescription, newStatus, subtasks.get(id).epicId);
-        subtasks.put(id, subtask);
-        //Обновление статуса эпика
-        changeStatusEpic(EpicList);
     }
 
     //метод удаления Task по ID

@@ -71,27 +71,63 @@ public class Main {
         System.out.println(taskManager.getEpics());
         System.out.println("Показ списка subtasks");
         System.out.println(taskManager.getSubtasks());
-        System.out.println("Изменение  задачи Task");
+        System.out.println("Изменение  задач");
+
         name = "";
         description = "BBB";
         NewTask = new Task(name,description);
         taskManager.changeTask(NewTask,0 );
+
         name = "TaskFFFF";
         description = "";
         NewTask = new Task(name,description);
         taskManager.changeTask(NewTask,1 );
+
+        name = "Sub123334";
+        description = "";
+        NewSubTask = new SubTask(name,description,4);
+        taskManager.changeSubtask(NewSubTask,9 );
+
+        name = "";
+        description = "AAAAAAAA!";
+        NewSubTask = new SubTask(name,description,4);
+        taskManager.changeSubtask(NewSubTask,8 );
+
+        name = "EpicB";
+        description = "";
+        subList = new ArrayList<>();
+        NewEpic = new Epic(name,description,subList);
+        taskManager.changeEpic(NewEpic,2);
+
+        name = "";
+        description = "AAA!";
+        subList = new ArrayList<>();
+        NewEpic = new Epic(name,description,subList);
+        taskManager.changeEpic(NewEpic,3);
+
+        System.out.println(taskManager.getEpics());
+        System.out.println(taskManager.getSubtasks());
         System.out.println(taskManager.getTasks());
 
         System.out.println("Изменение статусов задач");
         taskManager.changeStatusTask( 3,0);
+        taskManager.changeStatusTask( 3,12);
+        taskManager.changeStatusTask( 2,1);
         taskManager.changeStatusSubTask(3, 5);
         taskManager.changeStatusSubTask(3, 7);
+        taskManager.changeStatusSubTask(3, 8);
+        taskManager.changeStatusSubTask(3, 9);
+        taskManager.changeStatusSubTask(3, 10);
 
+        System.out.println(taskManager.getTasks());
         System.out.println(taskManager.getEpics());
         System.out.println(taskManager.getSubtasks());
 
         System.out.println("Показ конкретной задачи");
         System.out.println(taskManager.getEpicsById( 3));
+        System.out.println(taskManager.getSubtasksById( 5));
+        System.out.println(taskManager.getTasksById( 0));
+        System.out.println(taskManager.getTasksById( 10));
         System.out.println("Удаление одной подзадачи");
         taskManager.deleteSubtasksById( 5);
         System.out.println("Удаление одного эпика");
@@ -102,6 +138,11 @@ public class Main {
         System.out.println(taskManager.getSubtasks());
         System.out.println("Показ списка подзадач");
         System.out.println(taskManager.getListSubtasks(4));
-
+        System.out.println("Удаление всех подзадач");
+        taskManager.deleteSubtasks();
+        System.out.println("Показ списка epics");
+        System.out.println(taskManager.getEpics());
+        System.out.println("Показ списка subtasks");
+        System.out.println(taskManager.getSubtasks());
     }
 }
