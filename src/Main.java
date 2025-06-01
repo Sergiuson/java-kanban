@@ -1,7 +1,6 @@
 
 
-//import java.util.Scanner;
-import java.util.HashMap;
+
 import java.util.ArrayList;
 
 public class Main {
@@ -122,32 +121,6 @@ public class Main {
         System.out.println("Показ конкретной задачи:");
         System.out.println("Показ конкретной задачи epic");
         System.out.println(taskManager.getEpicsById( 3));
-/*
-        System.out.println("Показ конкретной задачи subtask");
-        System.out.println(taskManager.getSubtasksById( 5));
-        System.out.println("Показ конкретной задачи task 1");
-        System.out.println(taskManager.getTasksById( 0));
-        System.out.println("Показ конкретной задачи task 2");
-        System.out.println(taskManager.getTasksById( 10));
-        System.out.println("Показ конкретной задачи subtask 2");
-        System.out.println(taskManager.getSubtasksById( 7));
-        System.out.println("Показ конкретной задачи subtask 3");
-        System.out.println(taskManager.getSubtasksById( 7));
-        System.out.println("Показ конкретной задачи subtask 4");
-        System.out.println(taskManager.getSubtasksById( 7));
-        System.out.println("Показ конкретной задачи subtask 5");
-        System.out.println(taskManager.getSubtasksById( 6));
-        System.out.println("Показ конкретной задачи subtask 6");
-        System.out.println(taskManager.getSubtasksById( 6));
-        System.out.println("Показ конкретной задачи subtask 7");
-        System.out.println(taskManager.getSubtasksById( 6));
-        System.out.println("Показ конкретной задачи subtask 8");
-        System.out.println(taskManager.getSubtasksById( 7));
-        System.out.println("Показ конкретной задачи subtask 9");
-        System.out.println(taskManager.getSubtasksById( 6));
-        System.out.println("Показ конкретной задачи epic");
-        System.out.println(taskManager.getEpicsById( 3));
-*/
 
 
         System.out.println("Показ списка просмотра последний 10 задача:");
