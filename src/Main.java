@@ -10,11 +10,7 @@ public class Main {
 
         // Scanner console = new Scanner(System.in);
 
-        HashMap<Integer, Task> tasks = new HashMap<>();
-        HashMap<Integer, Epic> epics = new HashMap<>();
-        HashMap<Integer, SubTask> subtasks = new HashMap<>();
-
-        TaskManager taskManager = new InMemoryTaskManager(tasks,epics,subtasks);
+        TaskManager taskManager = Managers.getDefault();
 
         String name;
         String description;
@@ -126,6 +122,7 @@ public class Main {
         System.out.println("Показ конкретной задачи:");
         System.out.println("Показ конкретной задачи epic");
         System.out.println(taskManager.getEpicsById( 3));
+/*
         System.out.println("Показ конкретной задачи subtask");
         System.out.println(taskManager.getSubtasksById( 5));
         System.out.println("Показ конкретной задачи task 1");
@@ -150,7 +147,7 @@ public class Main {
         System.out.println(taskManager.getSubtasksById( 6));
         System.out.println("Показ конкретной задачи epic");
         System.out.println(taskManager.getEpicsById( 3));
-
+*/
 
 
         System.out.println("Показ списка просмотра последний 10 задача:");

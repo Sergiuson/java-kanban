@@ -63,18 +63,30 @@ public class InMemoryTaskManager implements TaskManager {
     //метод просмотра  всех задач с типом Task
     @Override
     public  Collection<Task> getTasks(){
-       return tasks.values();
+        Collection<Task> tasksList = new ArrayList<>();
+        for (Integer i : tasks.keySet()){
+            tasksList.add(getTasksById(i));
+        }
+       return tasksList;
     }
     //метод просмотра  всех задач с типом Epic
     @Override
     public  Collection<Epic> getEpics(){
-        return epics.values();
+        Collection<Epic> epicsList = new ArrayList<>();
+        for (Integer i : epics.keySet()){
+            epicsList.add(getEpicsById(i));
+        }
+        return epicsList;
     }
 
     //метод просмотра  всех задач c типом Subtask
     @Override
     public  Collection<SubTask> getSubtasks(){
-        return subtasks.values();
+        Collection<SubTask> subtasksList = new ArrayList<>();
+        for (Integer i : subtasks.keySet()){
+            subtasksList.add(getSubtasksById(i));
+        }
+        return subtasksList;
     }
 
     //метод удаления всех Task
