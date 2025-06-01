@@ -1,6 +1,6 @@
 
 
-import java.util.Scanner;
+//import java.util.Scanner;
 import java.util.HashMap;
 import java.util.ArrayList;
 
@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Scanner console = new Scanner(System.in);
+        // Scanner console = new Scanner(System.in);
 
         HashMap<Integer, Task> tasks = new HashMap<>();
         HashMap<Integer, Epic> epics = new HashMap<>();
@@ -132,28 +132,31 @@ public class Main {
         System.out.println(taskManager.getTasksById( 0));
         System.out.println("Показ конкретной задачи task 2");
         System.out.println(taskManager.getTasksById( 10));
-        /*
-        System.out.println("Удаление одной подзадачи");
-        //taskManager.deleteSubtasksById( 5);
-        System.out.println("Удаление одного эпика");
-        //taskManager.deleteEpicsById( 3);
-        System.out.println("Показ списка epics");
-        System.out.println(taskManager.getEpics());
-        System.out.println("Показ списка subtasks");
-        System.out.println(taskManager.getSubtasks());
-        System.out.println("Показ списка подзадач");
-        System.out.println(taskManager.getListSubtasks(4));
-        System.out.println("Удаление всех подзадач");
-        //taskManager.deleteSubtasks();
-        System.out.println("Показ списка epics");
-        System.out.println(taskManager.getEpics());
-        System.out.println("Показ списка subtasks");
-        System.out.println(taskManager.getSubtasks());
+        System.out.println("Показ конкретной задачи subtask 2");
+        System.out.println(taskManager.getSubtasksById( 7));
+        System.out.println("Показ конкретной задачи subtask 3");
+        System.out.println(taskManager.getSubtasksById( 7));
+        System.out.println("Показ конкретной задачи subtask 4");
+        System.out.println(taskManager.getSubtasksById( 7));
+        System.out.println("Показ конкретной задачи subtask 5");
+        System.out.println(taskManager.getSubtasksById( 6));
+        System.out.println("Показ конкретной задачи subtask 6");
+        System.out.println(taskManager.getSubtasksById( 6));
+        System.out.println("Показ конкретной задачи subtask 7");
+        System.out.println(taskManager.getSubtasksById( 6));
+        System.out.println("Показ конкретной задачи subtask 8");
+        System.out.println(taskManager.getSubtasksById( 7));
+        System.out.println("Показ конкретной задачи subtask 9");
+        System.out.println(taskManager.getSubtasksById( 6));
+        System.out.println("Показ конкретной задачи epic");
+        System.out.println(taskManager.getEpicsById( 3));
 
-         */
+
+
         System.out.println("Показ списка просмотра последний 10 задача:");
         for(Task t : taskManager.getHistory()){
             System.out.println(t);
         }
+
     }
 }
