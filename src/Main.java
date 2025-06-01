@@ -123,15 +123,20 @@ public class Main {
         System.out.println(taskManager.getEpics());
         System.out.println(taskManager.getSubtasks());
 
-        System.out.println("Показ конкретной задачи");
+        System.out.println("Показ конкретной задачи:");
+        System.out.println("Показ конкретной задачи epic");
         System.out.println(taskManager.getEpicsById( 3));
+        System.out.println("Показ конкретной задачи subtask");
         System.out.println(taskManager.getSubtasksById( 5));
+        System.out.println("Показ конкретной задачи task 1");
         System.out.println(taskManager.getTasksById( 0));
+        System.out.println("Показ конкретной задачи task 2");
         System.out.println(taskManager.getTasksById( 10));
+        /*
         System.out.println("Удаление одной подзадачи");
-        taskManager.deleteSubtasksById( 5);
+        //taskManager.deleteSubtasksById( 5);
         System.out.println("Удаление одного эпика");
-        taskManager.deleteEpicsById( 3);
+        //taskManager.deleteEpicsById( 3);
         System.out.println("Показ списка epics");
         System.out.println(taskManager.getEpics());
         System.out.println("Показ списка subtasks");
@@ -139,10 +144,16 @@ public class Main {
         System.out.println("Показ списка подзадач");
         System.out.println(taskManager.getListSubtasks(4));
         System.out.println("Удаление всех подзадач");
-        taskManager.deleteSubtasks();
+        //taskManager.deleteSubtasks();
         System.out.println("Показ списка epics");
         System.out.println(taskManager.getEpics());
         System.out.println("Показ списка subtasks");
         System.out.println(taskManager.getSubtasks());
+
+         */
+        System.out.println("Показ списка просмотра последний 10 задача:");
+        for(Task t : taskManager.getHistory()){
+            System.out.println(t);
+        }
     }
 }

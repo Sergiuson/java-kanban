@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
+
 public interface TaskManager {
     //метод создания  задач с типом Task
     void createTask(Task newTask);
@@ -68,4 +69,7 @@ public interface TaskManager {
 
     //метод просмотра подзадач опредленного эпика
     ArrayList<SubTask> getListSubtasks(int id);
+
+    //метод просмотра истории задач
+    ArrayList<Task> getHistory();
 }

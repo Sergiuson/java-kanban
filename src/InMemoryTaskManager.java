@@ -7,6 +7,8 @@ public class InMemoryTaskManager implements TaskManager {
     HashMap<Integer, Task> tasks;
     HashMap<Integer, Epic> epics;
     HashMap<Integer, SubTask> subtasks;
+    //Объявление списка последних задач
+    ArrayList<Task> HistoryTaskList = new ArrayList<>();
     //Объявление начального идентификатора задач
     int id;
 
@@ -101,16 +103,47 @@ public class InMemoryTaskManager implements TaskManager {
     //метод просмотра   задачи с типом Task по id
     @Override
     public  Task getTasksById(Integer id){
+
+        if(HistoryTaskList.size() < 10){
+            HistoryTaskList.add(tasks.get(id));
+        } else{
+            HistoryTaskList.removeFirst();
+            HistoryTaskList.set(1,tasks.get(id));
+        }
+        System.out.println("Проверка списка HistoryTaskList");
+        for(Task t : HistoryTaskList){
+            System.out.println(t);
+        }
         return tasks.get(id);
     }
     //метод просмотра   задачи с типом Epic по id
     @Override
     public  Epic getEpicsById(Integer id){
+        if(HistoryTaskList.size() < 10){
+            HistoryTaskList.add(epics.get(id));
+        } else{
+            HistoryTaskList.removeFirst();
+            HistoryTaskList.add(epics.get(id));
+        }
+        System.out.println("Проверка списка HistoryTaskList");
+        for(Task t : HistoryTaskList){
+            System.out.println(t);
+        }
         return epics.get(id);
     }
     //метод просмотра   задачи с типом SubTask по id
     @Override
     public  SubTask getSubtasksById(Integer id){
+        if(HistoryTaskList.size() < 10){
+            HistoryTaskList.add(subtasks.get(id));
+        } else{
+            HistoryTaskList.removeFirst();
+            HistoryTaskList.add(subtasks.get(id));
+        }
+        System.out.println("Проверка списка HistoryTaskList");
+        for(Task t : HistoryTaskList){
+            System.out.println(t);
+        }
         return subtasks.get(id);
     }
 
@@ -313,5 +346,10 @@ public class InMemoryTaskManager implements TaskManager {
             }
         }
         return listSubtask;
+    }
+
+    @Override
+    public ArrayList<Task> getHistory(){
+        return HistoryTaskList;
     }
 }
