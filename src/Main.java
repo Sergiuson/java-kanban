@@ -14,7 +14,7 @@ public class Main {
         HashMap<Integer, Epic> epics = new HashMap<>();
         HashMap<Integer, SubTask> subtasks = new HashMap<>();
 
-        TaskManager taskManager = new TaskManager(tasks,epics,subtasks);
+        TaskManager taskManager = new InMemoryTaskManager(tasks,epics,subtasks);
 
         String name;
         String description;
