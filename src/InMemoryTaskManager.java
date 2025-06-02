@@ -8,7 +8,8 @@ public class InMemoryTaskManager implements TaskManager {
     HashMap<Integer, Epic> epics;
     HashMap<Integer, SubTask> subtasks;
     //Объявление списка последних задач
-    ArrayList<Task> HistoryTaskList = new ArrayList<>();
+    HistoryManager historyManager = Managers.getDefaultHistory();
+    ArrayList<Task> thisHistoryTaskList = historyManager.getHistory();
     //Объявление начального идентификатора задач
     int id;
 
@@ -115,34 +116,24 @@ public class InMemoryTaskManager implements TaskManager {
     //метод просмотра   задачи с типом Task по id
     @Override
     public  Task getTasksById(Integer id){
-        if(HistoryTaskList.size() < 10 & tasks.containsKey(id)){
-            HistoryTaskList.add(tasks.get(id));
-        } else if (tasks.containsKey(id))
-        {
-            HistoryTaskList.removeFirst();
-            HistoryTaskList.set(1,tasks.get(id));
+        if (tasks.containsKey(id)){
+            historyManager.add(tasks.get(id));
         }
         return tasks.get(id);
     }
     //метод просмотра   задачи с типом Epic по id
     @Override
     public  Epic getEpicsById(Integer id){
-        if(HistoryTaskList.size() < 10 & epics.containsKey(id) ){
-            HistoryTaskList.add(epics.get(id));
-        } else if(epics.containsKey(id)){
-            HistoryTaskList.removeFirst();
-            HistoryTaskList.add(epics.get(id));
+        if (epics.containsKey(id)){
+            historyManager.add(epics.get(id));
         }
         return epics.get(id);
     }
     //метод просмотра   задачи с типом SubTask по id
     @Override
     public  SubTask getSubtasksById(Integer id){
-        if(HistoryTaskList.size() < 10 & subtasks.containsKey(id)){
-            HistoryTaskList.add(subtasks.get(id));
-        } else if (subtasks.containsKey(id)){
-            HistoryTaskList.removeFirst();
-            HistoryTaskList.add(subtasks.get(id));
+        if (subtasks.containsKey(id)){
+            historyManager.add(subtasks.get(id));
         }
         return subtasks.get(id);
     }
@@ -348,8 +339,5 @@ public class InMemoryTaskManager implements TaskManager {
         return listSubtask;
     }
 
-    @Override
-    public ArrayList<Task> getHistory(){
-        return HistoryTaskList;
-    }
+
 }

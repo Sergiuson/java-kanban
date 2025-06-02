@@ -70,6 +70,5 @@ public interface TaskManager {
     //метод просмотра подзадач опредленного эпика
     ArrayList<SubTask> getListSubtasks(int id);
 
-    //метод просмотра истории задач
-    ArrayList<Task> getHistory();
+
 }

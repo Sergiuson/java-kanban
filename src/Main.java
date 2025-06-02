@@ -11,6 +11,8 @@ public class Main {
 
         TaskManager taskManager = Managers.getDefault();
 
+
+
         String name;
         String description;
         //Ниже идут тесты из TaskManager
@@ -124,9 +126,12 @@ public class Main {
 
 
         System.out.println("Показ списка просмотра последний 10 задача:");
-        for(Task t : taskManager.getHistory()){
+
+        for(Task t : taskManager.thisHistoryTaskList){
             System.out.println(t);
         }
+
+
 
     }
 }
