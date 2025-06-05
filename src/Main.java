@@ -102,9 +102,9 @@ public class Main {
         NewEpic = new Epic(name,description,subList);
         taskManager.changeEpic(NewEpic,3);
 
-        System.out.println(taskManager.getEpics());
-        System.out.println(taskManager.getSubtasks());
-        System.out.println(taskManager.getTasks());
+     //   System.out.println(taskManager.getEpics());
+      //  System.out.println(taskManager.getSubtasks());
+      //  System.out.println(taskManager.getTasks());
 
         System.out.println("Изменение статусов задач");
         taskManager.changeStatusTask( 3,0);
@@ -116,18 +116,19 @@ public class Main {
         taskManager.changeStatusSubTask(3, 9);
         taskManager.changeStatusSubTask(3, 10);
 
-        System.out.println(taskManager.getTasks());
-        System.out.println(taskManager.getEpics());
-        System.out.println(taskManager.getSubtasks());
+
 
         System.out.println("Показ конкретной задачи:");
         System.out.println("Показ конкретной задачи epic");
-        System.out.println(taskManager.getEpicsById( 3));
+      //  System.out.println(taskManager.getEpicsById( 3));
 
+        System.out.println(taskManager.getTasks());
+        System.out.println(taskManager.getEpics());
 
         System.out.println("Показ списка просмотра последний 10 задача:");
 
-        for(Task t : taskManager.thisHistoryTaskList){
+
+        for(Task t : Managers.memoryHistoryManager.getHistory()){
             System.out.println(t);
         }
 

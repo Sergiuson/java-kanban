@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class InMemoryHistoryManager implements HistoryManager {
 
     //Объявление списка последних задач
-    ArrayList<Task> historyTaskList;
+    public ArrayList<Task> historyTaskList;
 
     InMemoryHistoryManager(){
         historyTaskList = new ArrayList<>();
@@ -22,7 +22,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         } else
         {
             historyTaskList.removeFirst();
-            historyTaskList.set(1,task);
+            historyTaskList.add(task);
         }
     }
 }

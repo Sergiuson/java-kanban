@@ -9,7 +9,6 @@ public class InMemoryTaskManager implements TaskManager {
     HashMap<Integer, SubTask> subtasks;
     //Объявление списка последних задач
     HistoryManager historyManager = Managers.getDefaultHistory();
-    ArrayList<Task> thisHistoryTaskList = historyManager.getHistory();
     //Объявление начального идентификатора задач
     int id;
 
@@ -338,6 +337,8 @@ public class InMemoryTaskManager implements TaskManager {
         }
         return listSubtask;
     }
+
+
 
 
 }
