@@ -124,6 +124,7 @@ public class Main {
 
         System.out.println(taskManager.getTasks());
         System.out.println(taskManager.getEpics());
+        System.out.println(taskManager.getEpicsById( 3));
 
         System.out.println("Показ списка просмотра последний 10 задача:");
 
