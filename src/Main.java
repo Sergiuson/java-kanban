@@ -31,6 +31,7 @@ public class Main {
         ArrayList<Integer> subList = new ArrayList<>();
         Epic NewEpic = new Epic(name,description,subList);
         taskManager.createEpic(NewEpic);
+        System.out.println("NewEpic = " + taskManager.getEpics());
         name = "TaskC";
         description = "sdlslffldsdssdsddssdsd";
         subList = new ArrayList<>();
