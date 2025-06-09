@@ -1,5 +1,12 @@
+package test;
+
+import manager.*;
+import task.*;
+
+
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -21,10 +28,10 @@ class EpicTest {
 
         final Epic savedEpic = taskManager.getEpicsById(0);
 
-        assertNotNull(savedEpic, "Задача не найдена.");
-        assertEquals(epic, savedEpic, "Задачи не совпадают.");
+        Assertions.assertNotNull(savedEpic, "Задача не найдена.");
+        Assertions.assertEquals(epic, savedEpic, "Задачи не совпадают.");
         //Дубликат задачи
-        Epic epic2 = new Epic("Test addNewEpic", "Test addNewEpic description",StatusTask.NEW, listSubTasks);
+        Epic epic2 = new Epic("Test addNewEpic", "Test addNewEpic description", StatusTask.NEW, listSubTasks);
         taskManager.createEpic(epic2);
         final Collection<Epic> epics = taskManager.getEpics();
 

@@ -1,9 +1,11 @@
+package task;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class Epic extends Task {
 
-    ArrayList<Integer> listSubTasks;
+    public ArrayList<Integer> listSubTasks;
 
 
 
@@ -35,7 +37,7 @@ public class Epic extends Task {
     @Override
     public String toString() {
         return
-                "Epic{name = " + name +  ", type = " + type + ", status = " + status  + ", description = '" + description +  "', listSubTasks = " + listSubTasks + '}';
+                "task.Epic{name = " + name +  ", type = " + type + ", status = " + status  + ", description = '" + description +  "', listSubTasks = " + listSubTasks + '}';
     }
 
 }

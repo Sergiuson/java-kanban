@@ -1,9 +1,14 @@
+package test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.util.Collection;
 
+import manager.*;
+import task.*;
 
 class TaskTest {
     private static TaskManager taskManager;
@@ -18,8 +23,8 @@ class TaskTest {
 
         final Task savedTask = taskManager.getTasksById(0);
 
-        assertNotNull(savedTask, "Задача не найдена.");
-        assertEquals(task, savedTask, "Задачи не совпадают.");
+        Assertions.assertNotNull(savedTask, "Задача не найдена.");
+        Assertions.assertEquals(task, savedTask, "Задачи не совпадают.");
         //Дубликат задачи
         Task task2 = new Task("Test addNewTask", "Test addNewTask description", StatusTask.NEW);
         taskManager.createTask(task2);

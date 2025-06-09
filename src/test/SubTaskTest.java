@@ -1,8 +1,12 @@
+package test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
+import manager.*;
+import task.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,8 +30,8 @@ class SubTaskTest {
 
         final SubTask savedSubTask = taskManager.getSubtasksById(1);
 
-        assertNotNull(savedSubTask, "Задача не найдена.");
-        assertEquals(subTask, savedSubTask, "Задачи не совпадают.");
+        Assertions.assertNotNull(savedSubTask, "Задача не найдена.");
+        Assertions.assertEquals(subTask, savedSubTask, "Задачи не совпадают.");
         //Дубликат задачи
         SubTask subTask2 = new SubTask("Test addNewSubtask", "Test addNewSubtask description", 0);
         taskManager.createSubtask(subTask2);

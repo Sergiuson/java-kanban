@@ -1,4 +1,13 @@
+package manager;
+
+import task.Epic;
+import task.StatusTask;
+import task.SubTask;
+import task.Task;
+
 import java.util.*;
+
+
 
 public class InMemoryTaskManager implements TaskManager {
 
@@ -21,7 +30,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
 
-    //метод создания  задач с типом Task
+    //метод создания  задач с типом task.Task
     @Override
     public  void createTask(Task newTask){
         if(!tasks.containsValue(newTask)){
@@ -29,7 +38,7 @@ public class InMemoryTaskManager implements TaskManager {
             id++;
         }
     }
-    //метод создания  задач с типом Epic
+    //метод создания  задач с типом task.Epic
     @Override
     public  void createEpic(Epic newEpic){
 
@@ -38,12 +47,12 @@ public class InMemoryTaskManager implements TaskManager {
             id++;
         }
     }
-    //метод создания  задач с типом SubTask
+    //метод создания  задач с типом task.SubTask
     @Override
     public  void createSubtask(SubTask newSubTask){
 
 
-        // Subtask создается только в том случае, если сущестует Epic c таким epicId и у него нет ещё такой подзадачи
+        // Subtask создается только в том случае, если сущестует task.Epic c таким epicId и у него нет ещё такой подзадачи
         if(!subtasks.containsValue(newSubTask) && epics.containsKey(newSubTask.epicId)) {
             subtasks.put(id, newSubTask);
             //Обновление родительского эпика
@@ -60,7 +69,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    //метод просмотра  всех задач с типом Task
+    //метод просмотра  всех задач с типом task.Task
     @Override
     public  Collection<Task> getTasks(){
         Collection<Task> tasksList = new ArrayList<>();
@@ -69,7 +78,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
        return tasksList;
     }
-    //метод просмотра  всех задач с типом Epic
+    //метод просмотра  всех задач с типом task.Epic
     @Override
     public  Collection<Epic> getEpics(){
         Collection<Epic> epicsList = new ArrayList<>();
@@ -89,17 +98,17 @@ public class InMemoryTaskManager implements TaskManager {
         return subtasksList;
     }
 
-    //метод удаления всех Task
+    //метод удаления всех task.Task
     @Override
     public  void deleteTasks(){
         tasks.clear();
     }
-    //метод удаления всех Epic
+    //метод удаления всех task.Epic
     @Override
     public  void deleteEpics(){
         epics.clear();
     }
-    //метод удаления всех SubTask
+    //метод удаления всех task.SubTask
     @Override
     public  void deleteSubtasks(){
         //Определяем список существующих эпиков
@@ -112,7 +121,7 @@ public class InMemoryTaskManager implements TaskManager {
         //Обновляем статусы всем эпикам
         changeStatusEpic(EpicIdList);
     }
-    //метод просмотра   задачи с типом Task по id
+    //метод просмотра   задачи с типом task.Task по id
     @Override
     public  Task getTasksById(Integer id){
         if (tasks.containsKey(id)){
@@ -120,7 +129,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
         return tasks.get(id);
     }
-    //метод просмотра   задачи с типом Epic по id
+    //метод просмотра   задачи с типом task.Epic по id
     @Override
     public  Epic getEpicsById(Integer id){
         if (epics.containsKey(id)){
@@ -128,7 +137,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
         return epics.get(id);
     }
-    //метод просмотра   задачи с типом SubTask по id
+    //метод просмотра   задачи с типом task.SubTask по id
     @Override
     public  SubTask getSubtasksById(Integer id){
         if (subtasks.containsKey(id)){
@@ -137,7 +146,7 @@ public class InMemoryTaskManager implements TaskManager {
         return subtasks.get(id);
     }
 
-    //метод обновления  всех задач с типом Task
+    //метод обновления  всех задач с типом task.Task
     @Override
     public  void changeTask(Task newTask, int id){
         if (tasks.containsKey(id)) {
@@ -158,7 +167,7 @@ public class InMemoryTaskManager implements TaskManager {
             }
         }
     }
-    //метод обновления  всех задач с типом Epic
+    //метод обновления  всех задач с типом task.Epic
     @Override
     public  void changeEpic(Epic newEpic, int id){
         if (epics.containsKey(id)) {
@@ -180,7 +189,7 @@ public class InMemoryTaskManager implements TaskManager {
             }
         }
     }
-    //метод обновления  всех задач с типом SubTask
+    //метод обновления  всех задач с типом task.SubTask
     @Override
     public  void changeSubtask(SubTask newSubTask, int id){
         if (subtasks.containsKey(id)) {
@@ -202,7 +211,7 @@ public class InMemoryTaskManager implements TaskManager {
             }
         }
     }
-    //метод обновления статуса  всех задач с типом Task
+    //метод обновления статуса  всех задач с типом task.Task
     @Override
     public  void changeStatusTask(int statusCode, int id){
         if (tasks.containsKey(id)) {
@@ -228,7 +237,7 @@ public class InMemoryTaskManager implements TaskManager {
             tasks.put(id, task);
         }
     }
-    //метод обновления статуса  всех задач с типом Epic
+    //метод обновления статуса  всех задач с типом task.Epic
     @Override
     public  void changeStatusEpic(HashSet<Integer> listId){
         for(int id : listId) {
@@ -270,7 +279,7 @@ public class InMemoryTaskManager implements TaskManager {
             }
         }
     }
-    //метод обновления статуса  всех задач с типом SubTask
+    //метод обновления статуса  всех задач с типом task.SubTask
     @Override
     public  void changeStatusSubTask(int statusCode, int id){
         if (subtasks.containsKey(id)) {
@@ -302,12 +311,12 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    //метод удаления Task по ID
+    //метод удаления task.Task по ID
     @Override
     public  void deleteTasksById(int id){
         tasks.remove(id);
     }
-    //метод удаления Epic по ID
+    //метод удаления task.Epic по ID
     @Override
     public  void deleteEpicsById(int id){
         epics.remove(id);

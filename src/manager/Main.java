@@ -1,5 +1,9 @@
+package manager;
 
 
+import task.Epic;
+import task.SubTask;
+import task.Task;
 
 import java.util.ArrayList;
 
@@ -15,7 +19,7 @@ public class Main {
 
         String name;
         String description;
-        //Ниже идут тесты из TaskManager
+        //Ниже идут тесты из manager.TaskManager
         System.out.println("Создание tasks");
         name = "TaskA";
         description = "AAAA";
@@ -123,9 +127,9 @@ public class Main {
         System.out.println("Показ конкретной задачи epic");
       //  System.out.println(taskManager.getEpicsById( 3));
 
-        System.out.println(taskManager.getTasks());
-        System.out.println(taskManager.getEpics());
-        System.out.println(taskManager.getEpicsById( 3));
+        //System.out.println(taskManager.getTasks());
+        //System.out.println(taskManager.getEpics());
+        //System.out.println(taskManager.getEpicsById( 3));
 
         System.out.println("Показ списка просмотра последний 10 задача:");
 

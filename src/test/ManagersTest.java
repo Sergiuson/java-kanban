@@ -1,18 +1,19 @@
-import static org.junit.jupiter.api.Assertions.*;
+package test;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
+import manager.*;
+import task.*;
 import java.util.ArrayList;
 
 class ManagersTest {
 
-    private static HistoryManager historyManager;
+
     private static TaskManager taskManager;
     @BeforeAll
     public static void taskManagerCreate(){
         taskManager = Managers.getDefault();
-        historyManager = Managers.getDefaultHistory();
     }
     @Test
     void taskManagerTest(){
@@ -25,16 +26,17 @@ class ManagersTest {
         final Task saveTask = taskManager.getTasksById(0);
         final Task saveEpic = taskManager.getEpicsById(1);
 
-        assertNotNull(saveTask, "Задача не возвращается.");
+        Assertions.assertNotNull(saveTask, "Задача не возвращается.");
+        Assertions.assertNotNull(saveEpic, "Задача не возвращается.");
 
         taskManager.deleteTasksById(0);
 
-        assertNull(taskManager.getTasksById(0), "Задача  возвращается.");
+        Assertions.assertNull(taskManager.getTasksById(0), "Задача  возвращается.");
 
-        final ArrayList<Task> history = historyManager.getHistory();
+        final ArrayList<Task> history = Managers.memoryHistoryManager.getHistory();
 
-        assertEquals(saveTask, history.get(0), "Задача не зафиксирована в истории ");
-        assertEquals(saveEpic, history.get(1), "Задача не зафиксирована в истории ");
+        Assertions.assertEquals(saveTask, history.getFirst(), "Задача не зафиксирована в истории ");
+        Assertions.assertEquals(saveEpic, history.getLast(), "Задача не зафиксирована в истории ");
     }
 
 }

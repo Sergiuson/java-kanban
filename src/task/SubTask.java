@@ -1,3 +1,5 @@
+package task;
+
 import java.util.Objects;
 
 public class SubTask extends Task {
@@ -5,13 +7,13 @@ public class SubTask extends Task {
     public Integer epicId;
 
 
-    SubTask(String name, String description,   Integer epicId){
+    public SubTask(String name, String description,   Integer epicId){
         super(name, description);
         this.epicId = epicId;
         this.type = TypeTask.SUBTASK;
     }
 
-    SubTask(String name, String description, StatusTask status,   Integer epicId){
+    public SubTask(String name, String description, StatusTask status, Integer epicId){
         super(name, description, status);
         this.epicId = epicId;
         this.type = TypeTask.SUBTASK;
@@ -35,6 +37,6 @@ public class SubTask extends Task {
     @Override
     public String toString() {
         return
-                "SubTask{name = " + name +  ", type = " + type + ", status = " + status  + ", description = '" + description +  "', epicId = " + epicId + '}';
+                "task.SubTask{name = " + name +  ", type = " + type + ", status = " + status  + ", description = '" + description +  "', epicId = " + epicId + '}';
     }
 }
